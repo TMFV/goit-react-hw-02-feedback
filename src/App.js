@@ -1,25 +1,59 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import FeedbackOptions from './Feedback/FeedbackOptions';
+import Statistics from './Statistics/Statistics';
+import Notification from './Notification/Notification';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  state = {
+    good: 0,
+    neutral: 0,
+    bad: 0,
+  };
+
+  onLeaveFeedback = e => {
+    const currentBtnValue = e.currentTarget.value;
+    this.setState(prevState => ({
+      ...prevState,
+      [currentBtnValue]: prevState[currentBtnValue] + 1,
+    }));
+  };
+
+  countTotalFeedback = () => {
+    const valuesArr = Object.values(this.state);
+    return valuesArr.reduce((acc, val) => {
+      acc += val;
+      return acc;
+    });
+  };
+
+  countPositiveFeedbackPercentage = () => {
+    return Math.trunc((this.state.good / this.countTotalFeedback()) * 100);
+  };
+
+  render() {
+    const btnNames = Object.keys(this.state);
+    return (
+      <div className="App">
+        <section>
+          <FeedbackOptions
+            options={btnNames}
+            onLeaveFeedback={this.onLeaveFeedback}
+          />
+          {this.state.good === 0 &&
+          this.state.neutral === 0 &&
+          this.state.bad === 0 ? (
+            <Notification message="No feedback given" />
+          ) : (
+            <Statistics
+              stat={this.state}
+              total={this.countTotalFeedback()}
+              positivePercentage={this.countPositiveFeedbackPercentage()}
+            />
+          )}
+        </section>
+      </div>
+    );
+  }
 }
 
 export default App;

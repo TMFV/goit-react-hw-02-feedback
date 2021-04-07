@@ -1,0 +1,21 @@
+.statistics {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.statistics__title {
+  font-size: 30px;
+  text-align: center;
+}
+.statistics__list {
+  list-style-type: none;
+  padding: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
+.statistics__name {
+  text-transform: capitalize;
+}
+.statistics__item {
+  font-size: 20px;
+}

@@ -1,0 +1,14 @@
+.feedback {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+.feedback__title {
+  font-size: 45px;
+  font-weight: 700;
+}
+.feedback_buttons {
+  padding: 5px 10px;
+  margin: 5px;
+  text-transform: capitalize;
+}
